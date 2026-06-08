@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>世界盃勝率預測列表</title>
+  <style>
+    :root {
+      --bg: #f5f1e8;
+      --panel: #fffdf8;
+      --line: #ddd1bc;
+      --text: #1e1914;
+      --muted: #6d6358;
+      --accent: #9b432d;
+      --accent-soft: #f3ddd2;
+      --shadow: 0 14px 36px rgba(64, 47, 25, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Microsoft JhengHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(155, 67, 45, 0.1), transparent 25%),
+        var(--bg);
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 18px 48px;
+    }
+
+    .hero,
+    .picker-card,
+    .match-card,
+    .status-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 26px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.05;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 16px;
+      max-width: 760px;
+    }
+
+    .picker-card {
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .picker-card label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .picker-card select {
+      width: 100%;
+      max-width: 320px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .status-card {
+      padding: 18px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    .match-list {
+      display: grid;
+      gap: 18px;
+    }
+
+    .match-card {
+      overflow: hidden;
+    }
+
+    .match-head {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff8ef, var(--panel));
+    }
+
+    .match-head h2 {
+      margin: 0 0 8px;
+      font-size: clamp(24px, 3vw, 32px);
+      line-height: 1.1;
+    }
+
+    .match-meta {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .match-body {
+      padding: 18px 20px 20px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th,
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #ece1d2;
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    th {
+      background: #fbf3e6;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .num {
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+    }
+
+    .source-name {
+      font-weight: 700;
+    }
+
+    .source-type {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .source-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .source-link:hover {
+      text-decoration: underline;
+    }
+
+    .pending,
+    .empty-state,
+    .error-text {
+      color: var(--muted);
+    }
+
+    .error-text {
+      color: #9a2f2f;
+    }
+
+    .empty-state {
+      padding: 24px;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.75);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding-inline: 14px;
+      }
+
+      .hero,
+      .picker-card,
+      .status-card,
+      .match-head,
+      .match-body {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <h1>世界盃勝率預測列表</h1>
+      <p>
+        這是可以直接放到 GitHub Pages 的靜態頁面。
+        使用者打開網址後，就能直接看到不同來源的主勝、和局、客勝列表。
+      </p>
+    </section>
+
+    <section class="picker-card">
+      <label for="date-picker">選擇比賽日期</label>
+      <select id="date-picker" disabled>
+        <option>資料載入中...</option>
+      </select>
+    </section>
+
+    <section class="status-card" id="status-card">正在載入預測資料...</section>
+
+    <section class="match-list" id="match-list"></section>
+  </div>
+
+  <script>
+    const datePicker = document.getElementById("date-picker");
+    const matchList = document.getElementById("match-list");
+    const statusCard = document.getElementById("status-card");
+
+    function sourceTypeLabel(type) {
+      const map = {
+        internal: "我的模型",
+        website: "網站",
+        manual: "手動紀錄"
+      };
+      return map[type] || "其他";
+    }
+
+    function formatPercent(value) {
+      return typeof value === "number" && Number.isFinite(value)
+        ? value.toFixed(1) + "%"
+        : '<span class="pending">待填</span>';
+    }
+
+    function groupedMatches(matches, date) {
+      return matches.filter((match) => match.matchDate === date);
+    }
+
+    function render(matches, selectedDate) {
+      const items = groupedMatches(matches, selectedDate);
+
+      if (!items.length) {
+        matchList.innerHTML = `
+          <div class="empty-state">
+            這一天目前還沒有紀錄。
+          </div>
+        `;
+        return;
+      }
+
+      matchList.innerHTML = items.map((match) => `
+        <article class="match-card">
+          <div class="match-head">
+            <h2>${match.homeTeam} vs ${match.awayTeam}</h2>
+            <p class="match-meta">
+              日期：${match.matchDate}
+              ${match.matchTime ? `｜時間：${match.matchTime}` : ""}
+              ${match.stage ? `｜階段：${match.stage}` : ""}
+              ${match.venue ? `｜場地：${match.venue}` : ""}
+            </p>
+          </div>
+          <div class="match-body">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>來源</th>
+                    <th>主勝</th>
+                    <th>和局</th>
+                    <th>客勝</th>
+                    <th>更新時間</th>
+                    <th>備註</th>
+                    <th>連結</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${match.sources.map((source) => `
+                    <tr>
+                      <td>
+                        <div class="source-name">${source.name}</div>
+                        <span class="source-type">${sourceTypeLabel(source.sourceType)}</span>
+                      </td>
+                      <td class="num">${formatPercent(source.homeWin)}</td>
+                      <td class="num">${formatPercent(source.draw)}</td>
+                      <td class="num">${formatPercent(source.awayWin)}</td>
+                      <td>${source.updatedAt || '<span class="pending">待填</span>'}</td>
+                      <td>${source.note || '<span class="pending">待填</span>'}</td>
+                      <td>${source.sourceUrl ? `<a class="source-link" href="${source.sourceUrl}" target="_blank" rel="noreferrer">開啟來源</a>` : '<span class="pending">無</span>'}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    async function bootstrap() {
+      try {
+        const response = await fetch("./predictions.json", { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error("無法讀取 predictions.json");
+        }
+
+        const matches = await response.json();
+        if (!Array.isArray(matches)) {
+          throw new Error("predictions.json 格式不正確");
+        }
+
+        const dates = [...new Set(matches.map((match) => match.matchDate).filter(Boolean))].sort();
+
+        if (!dates.length) {
+          statusCard.innerHTML = '<span class="empty-state">目前還沒有任何比賽資料。</span>';
+          datePicker.innerHTML = '<option value="">沒有資料</option>';
+          datePicker.disabled = true;
+          return;
+        }
+
+        datePicker.innerHTML = dates.map((date) => `<option value="${date}">${date}</option>`).join("");
+        datePicker.disabled = false;
+        datePicker.value = dates[0];
+
+        statusCard.textContent = "資料已載入，請直接選日期查看。";
+        render(matches, datePicker.value);
+
+        datePicker.addEventListener("change", () => {
+          render(matches, datePicker.value);
+        });
+      } catch (error) {
+        statusCard.innerHTML = `<span class="error-text">載入失敗：${error.message}</span>`;
+        datePicker.innerHTML = '<option value="">載入失敗</option>';
+        datePicker.disabled = true;
+        matchList.innerHTML = `
+          <div class="empty-state">
+            如果你是直接在本機雙擊開啟這個 HTML，有些瀏覽器會擋住資料讀取。
+            放到 GitHub Pages 後，這種方式就可以正常運作。
+          </div>
+        `;
+      }
+    }
+
+    bootstrap();
+  </script>
+</body>
+</html>

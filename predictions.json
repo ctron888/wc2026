@@ -1,0 +1,64 @@
+[
+  {
+    "id": "2026-06-11_mexico_vs_south_africa",
+    "matchDate": "2026-06-11",
+    "matchTime": "03:00",
+    "stage": "小組賽",
+    "homeTeam": "Mexico",
+    "awayTeam": "South Africa",
+    "venue": "Mexico City Stadium",
+    "sources": [
+      {
+        "name": "我的系統",
+        "sourceType": "internal",
+        "homeWin": 56.9,
+        "draw": 20.0,
+        "awayWin": 23.1,
+        "updatedAt": "2026-06-08",
+        "note": "樣本先發版試算",
+        "sourceUrl": null
+      },
+      {
+        "name": "OPTA",
+        "sourceType": "website",
+        "homeWin": 67.1,
+        "draw": 19.7,
+        "awayWin": 13.3,
+        "updatedAt": "2026-06-09",
+        "note": "The Analyst Fixtures",
+        "sourceUrl": "https://theanalyst.com/competition/fifa-world-cup"
+      }
+    ]
+  },
+  {
+    "id": "2026-06-11_south_korea_vs_czechia",
+    "matchDate": "2026-06-11",
+    "matchTime": "10:00",
+    "stage": "小組賽",
+    "homeTeam": "South Korea",
+    "awayTeam": "Czechia",
+    "venue": "Guadalajara Stadium",
+    "sources": [
+      {
+        "name": "我的系統",
+        "sourceType": "internal",
+        "homeWin": 43.9,
+        "draw": 25.0,
+        "awayWin": 31.1,
+        "updatedAt": "2026-06-08",
+        "note": "樣本先發版試算",
+        "sourceUrl": null
+      },
+      {
+        "name": "OPTA",
+        "sourceType": "website",
+        "homeWin": 42.9,
+        "draw": 26.0,
+        "awayWin": 31.1,
+        "updatedAt": "2026-06-09",
+        "note": "The Analyst Fixtures",
+        "sourceUrl": "https://theanalyst.com/competition/fifa-world-cup"
+      }
+    ]
+  }
+]

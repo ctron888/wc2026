@@ -227,8 +227,7 @@
     <section class="hero">
       <h1>世界盃勝率預測列表</h1>
       <p>
-        這是可以直接放到 GitHub Pages 的靜態頁面。
-        使用者打開網址後，就能直接看到不同來源的主勝、和局、客勝列表。
+        選擇比賽日期後，就能直接查看當天各場比賽在不同來源下的主勝、和局、客勝。
       </p>
     </section>
 
@@ -280,52 +279,61 @@
         return;
       }
 
-      matchList.innerHTML = items.map((match) => `
-        <article class="match-card">
-          <div class="match-head">
-            <h2>${match.homeTeam} vs ${match.awayTeam}</h2>
-            <p class="match-meta">
-              日期：${match.matchDate}
-              ${match.matchTime ? `｜時間：${match.matchTime}` : ""}
-              ${match.stage ? `｜階段：${match.stage}` : ""}
-              ${match.venue ? `｜場地：${match.venue}` : ""}
-            </p>
-          </div>
-          <div class="match-body">
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>來源</th>
-                    <th>主勝</th>
-                    <th>和局</th>
-                    <th>客勝</th>
-                    <th>更新時間</th>
-                    <th>備註</th>
-                    <th>連結</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${match.sources.map((source) => `
-                    <tr>
-                      <td>
-                        <div class="source-name">${source.name}</div>
-                        <span class="source-type">${sourceTypeLabel(source.sourceType)}</span>
-                      </td>
-                      <td class="num">${formatPercent(source.homeWin)}</td>
-                      <td class="num">${formatPercent(source.draw)}</td>
-                      <td class="num">${formatPercent(source.awayWin)}</td>
-                      <td>${source.updatedAt || '<span class="pending">待填</span>'}</td>
-                      <td>${source.note || '<span class="pending">待填</span>'}</td>
-                      <td>${source.sourceUrl ? `<a class="source-link" href="${source.sourceUrl}" target="_blank" rel="noreferrer">開啟來源</a>` : '<span class="pending">無</span>'}</td>
-                    </tr>
-                  `).join("")}
-                </tbody>
-              </table>
+      matchList.innerHTML = items.map((match) => {
+        const homeLabel = match.homeTeamZh || match.homeTeam;
+        const awayLabel = match.awayTeamZh || match.awayTeam;
+        const englishLine = match.homeTeamZh || match.awayTeamZh
+          ? `｜英文：${match.homeTeam} vs ${match.awayTeam}`
+          : "";
+
+        return `
+          <article class="match-card">
+            <div class="match-head">
+              <h2>${homeLabel} vs ${awayLabel}</h2>
+              <p class="match-meta">
+                日期：${match.matchDate}
+                ${match.matchTime ? `｜時間：${match.matchTime}` : ""}
+                ${match.stage ? `｜階段：${match.stage}` : ""}
+                ${match.venue ? `｜場地：${match.venue}` : ""}
+                ${englishLine}
+              </p>
             </div>
-          </div>
-        </article>
-      `).join("");
+            <div class="match-body">
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>來源</th>
+                      <th>主勝</th>
+                      <th>和局</th>
+                      <th>客勝</th>
+                      <th>更新時間</th>
+                      <th>備註</th>
+                      <th>連結</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${match.sources.map((source) => `
+                      <tr>
+                        <td>
+                          <div class="source-name">${source.name}</div>
+                          <span class="source-type">${sourceTypeLabel(source.sourceType)}</span>
+                        </td>
+                        <td class="num">${formatPercent(source.homeWin)}</td>
+                        <td class="num">${formatPercent(source.draw)}</td>
+                        <td class="num">${formatPercent(source.awayWin)}</td>
+                        <td>${source.updatedAt || '<span class="pending">待填</span>'}</td>
+                        <td>${source.note || '<span class="pending">待填</span>'}</td>
+                        <td>${source.sourceUrl ? `<a class="source-link" href="${source.sourceUrl}" target="_blank" rel="noreferrer">開啟來源</a>` : '<span class="pending">無</span>'}</td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
     }
 
     async function bootstrap() {

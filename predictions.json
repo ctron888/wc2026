@@ -5,7 +5,9 @@
     "matchTime": "03:00",
     "stage": "小組賽",
     "homeTeam": "Mexico",
+    "homeTeamZh": "墨西哥",
     "awayTeam": "South Africa",
+    "awayTeamZh": "南非",
     "venue": "Mexico City Stadium",
     "sources": [
       {
@@ -36,7 +38,9 @@
     "matchTime": "10:00",
     "stage": "小組賽",
     "homeTeam": "South Korea",
+    "homeTeamZh": "南韓",
     "awayTeam": "Czechia",
+    "awayTeamZh": "捷克",
     "venue": "Guadalajara Stadium",
     "sources": [
       {
